@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Redirect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to right, black, #1e3a8a);
+            color: white;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+        h2 {
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>QR Code Information</h2>
+        <p id="qr-data">Loading...</p>
+    </div>
+
+    <script>
+        // Get QR data from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const qrData = urlParams.get("data");
+
+        if (qrData) {
+            document.getElementById("qr-data").innerText = decodeURIComponent(qrData);
+
+            // Check if QR data is a URL and redirect
+            if (qrData.startsWith("http://") || qrData.startsWith("https://")) {
+                window.location.href = qrData;
+            }
+        } else {
+            document.getElementById("qr-data").innerText = "No data found in QR code.";
+        }
+    </script>
+</body>
+</html>
