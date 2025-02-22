@@ -51,6 +51,7 @@
             display: block;
             margin: auto;
             padding: 10px;
+            background-color: white;
         }
     </style>
 </head>
@@ -95,12 +96,31 @@
             }
 
             const qrData = `Name: ${name}\nMobile: ${mobile}\nVehicle: ${vehicle}`;
-            const qr = new QRious({
-                element: document.getElementById("qr-code"),
+            const canvas = document.getElementById("qr-code");
+
+            new QRious({
+                element: canvas,
                 value: qrData,
                 size: 200
             });
         }
+
+        document.getElementById("btn_convert").addEventListener("click", function () {
+            const canvas = document.getElementById("qr-code");
+
+            if (!canvas || !canvas.toDataURL) {
+                alert("Please generate the QR code first.");
+                return;
+            }
+
+            const imageURL = canvas.toDataURL("image/png");
+            const downloadLink = document.createElement("a");
+            downloadLink.href = imageURL;
+            downloadLink.download = "QR_Code.png";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        });
     </script>
 </body>
 </html>
